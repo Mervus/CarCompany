@@ -16,12 +16,10 @@ namespace CarCompany
     }
     
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-    [BepInDependency(LethalNetworkAPI.MyPluginInfo.PLUGIN_GUID, LethalNetworkAPI.MyPluginInfo.PLUGIN_VERSION)] 
     [BepInDependency(RuntimeNetcodeRPCValidator.MyPluginInfo.PLUGIN_GUID, RuntimeNetcodeRPCValidator.MyPluginInfo.PLUGIN_VERSION)]
     internal class CarModBase : BaseUnityPlugin
     {
         internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; } = null!;
-
         
         private readonly Harmony _harmony = new Harmony(PluginInfo.PLUGIN_GUID);
         internal static CarModBase Instance;
@@ -39,7 +37,6 @@ namespace CarCompany
             {
                 Instance = this;
             }
-            
             _harmony.PatchAll(typeof(CarModBase));
             _harmony.PatchAll(typeof(PlayerControllerBPatch));
             _harmony.PatchAll(typeof(NetworkManagerPatch));
@@ -61,14 +58,13 @@ namespace CarCompany
                 Logger.LogError("Asset Bundle could not be loaded");
             }
             
-            MervusNetworkHandler.Start();
-            
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
             
             netcodeValidator = new NetcodeValidator(PluginInfo.PLUGIN_GUID);
             netcodeValidator.PatchAll();
             
             netcodeValidator.BindToPreExistingObjectByBehaviour<HandlePlayerOnCar, PlayerControllerB>();
+            netcodeValidator.BindToPreExistingObjectByBehaviour<MervusNetworkHandler, StartOfRound>();
         }
         
     }

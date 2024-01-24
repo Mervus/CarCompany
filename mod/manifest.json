@@ -1,10 +1,10 @@
 ﻿{
-  "name": "TestMod",
-  "version_number": "0.5.0",
+  "name": "CarCompany",
+  "version_number": "0.5.2",
   "website_url": "https://github.com/Mervus/CarCompany",
   "description": "Remote Controlled Car",
   "dependencies": [
-    "xilophor-LethalNetworkAPI-2.1.0",
+    "BepInEx-BepInExPack-5.4.2100",
     "Ozone-Runtime_Netcode_Patcher-0.2.5"
   ]
 }

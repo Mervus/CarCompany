@@ -1,6 +1,8 @@
-﻿using HarmonyLib;
+﻿using System.Runtime.CompilerServices;
+using HarmonyLib;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CarCompany.Patches;
 
@@ -12,6 +14,12 @@ public class StartOfRoundPatch
     static void patchShipLeave()
     {
         UnityEngine.Object.Destroy(MervusNetworkHandler.CarGameObject);
-        MervusNetworkHandler.CarGameObject = null;
+    }
+    
+    [HarmonyPatch("Update")]
+    [HarmonyPrefix]
+    static void patchUpdate(ref StartOfRound __instance)
+    {
+       
     }
 }
