@@ -1,7 +1,7 @@
 # Car Company 
 A Lethal Company Car Mod
 
-This mod aims to be usable but expandable.
+This mod aims to be usable for actuall gameplay. For example using the car to get safe to your ship if your lucky and it spawned etc. (Not implementd)
 
 Car model used "[Fiat Multipla 1998 3D Model](https://skfb.ly/oxFWO)" by Betier Models is licensed under [Creative Commons Attribution](http://creativecommons.org/licenses/by/4.0/).
 
