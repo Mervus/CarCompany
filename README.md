@@ -8,7 +8,6 @@ Car model used "[Fiat Multipla 1998 3D Model](https://skfb.ly/oxFWO)" by Betier 
 ## Network Api's used
 
 This API uses [@NicholasScott1337](https://github.com/NicholasScott1337)'s [Runtime Netcode Patcher](https://github.com/NicholasScott1337/RuntimeNetcodeRPCValidator).
-This API uses [@Xilophor](https://github.com/Xilophor)'s [Lethal Network Api](https://github.com/Xilophor/LethalNetworkAPI). 2.0.1
 
 ## Acknowledgements
 
