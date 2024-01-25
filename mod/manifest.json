@@ -1,6 +1,6 @@
 ﻿{
   "name": "CarCompany",
-  "version_number": "0.5.2",
+  "version_number": "0.6.1",
   "website_url": "https://github.com/Mervus/CarCompany",
   "description": "Remote Controlled Car",
   "dependencies": [

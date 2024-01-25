@@ -11,15 +11,16 @@ public class StartOfRoundPatch
 {
     [HarmonyPatch("ShipLeave")]
     [HarmonyPostfix]
-    static void patchShipLeave()
+    static void patchShipLeave(ref StartOfRound __instance)
     {
-        UnityEngine.Object.Destroy(MervusNetworkHandler.CarGameObject);
-    }
-    
-    [HarmonyPatch("Update")]
-    [HarmonyPrefix]
-    static void patchUpdate(ref StartOfRound __instance)
-    {
-       
+        MervusNetworkHandler mervusNetworkHandler = __instance.gameObject.GetComponent<MervusNetworkHandler>();
+
+        if (mervusNetworkHandler == null)
+        {
+            CarModBase.Logger.LogError("Could not find MervusNetworkHandler");
+            return;
+        }
+
+        mervusNetworkHandler.DespawnCarServerRpc();
     }
 }

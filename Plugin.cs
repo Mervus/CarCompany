@@ -12,7 +12,7 @@ namespace CarCompany
     {
         public const string PLUGIN_GUID = "Mervus.CarCompany";
         public const string PLUGIN_NAME = "CarCompany";
-        public const string PLUGIN_VERSION = "0.5.0";
+        public const string PLUGIN_VERSION = "0.6.1";
     }
     
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
@@ -40,6 +40,7 @@ namespace CarCompany
             _harmony.PatchAll(typeof(CarModBase));
             _harmony.PatchAll(typeof(PlayerControllerBPatch));
             _harmony.PatchAll(typeof(NetworkManagerPatch));
+            _harmony.PatchAll(typeof(StartOfRound));
         
             FiatPrefab = null;
             

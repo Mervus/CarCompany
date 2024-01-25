@@ -10,7 +10,7 @@ namespace CarCompany;
 
 public class MervusNetworkHandler : NetworkBehaviour
 {
-    public static GameObject CarGameObject = null;
+    public GameObject CarGameObject = null;
     private PlayerControllerB localPlayer;
 
     private void Update()
@@ -31,21 +31,35 @@ public class MervusNetworkHandler : NetworkBehaviour
         }
     }
 
+    private Vector3 CarSpawnPosition(ulong clientId)
+    {
+        Vector3 spawnPosition = StartOfRound.Instance.allPlayerScripts[clientId].gameObject.transform.position;
+        //TODO: Calculate forward spawn
+        spawnPosition.x += 2f;
+        spawnPosition.y += 2f;
+
+        return spawnPosition;
+    }
+
     [ClientRpc]
     private void SpawnCarClientRpc(ulong clientId)
     {
-        CarModBase.Logger.LogInfo("ClientSpawnCar");
-
-        Vector3 spawnPosition = StartOfRound.Instance.allPlayerScripts[clientId].gameObject.transform.position;
         
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnCarServerRpc(ulong clientId)
+    {
+        CarModBase.Logger.LogInfo("SpawnCarServerRpc");
+
         if (CarGameObject == null)
         {
-            GameObject gameObject = Object.Instantiate(CarModBase.FiatPrefab, spawnPosition, new Quaternion(0f, 0f, 0f, 0f));
+        
+            GameObject gameObject = Object.Instantiate(CarModBase.FiatPrefab, CarSpawnPosition(clientId), new Quaternion(0f, 0f, 0f, 0f));
             gameObject.transform.GetChild(0).Find("WheelColliders").gameObject.AddComponent<WheelController>();
             gameObject.transform.Find("PlayerOnCarHandler").gameObject.AddComponent<HandlePlayerOnCar>();
             
             gameObject.GetComponent<NetworkObject>().Spawn();
-            
             gameObject.SetActive(true);
             CarGameObject = gameObject;
         }
@@ -53,18 +67,19 @@ public class MervusNetworkHandler : NetworkBehaviour
         {
             if (clientId == CarGameObject.GetComponent<NetworkObject>().OwnerClientId)
             {
-                CarGameObject.transform.position = spawnPosition;
+                CarGameObject.transform.position = CarSpawnPosition(clientId);
                 CarGameObject.transform.rotation = Quaternion.identity;
             }
         }
         CarModBase.Logger.LogInfo("Spawned Car on Client" + StartOfRound.Instance.allPlayerScripts[clientId].playerUsername);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SpawnCarServerRpc(ulong clientId)
-    {
         SpawnCarClientRpc(clientId);
     }
 
+    [ServerRpc]
+    public void DespawnCarServerRpc()
+    {
+        CarGameObject.GetComponent<NetworkObject>().Despawn();
+        CarGameObject = null;
+    }
    
 }
